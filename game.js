@@ -9,7 +9,8 @@ class ImposterWordGame {
             secretWord: null,
             votedPlayer: null,
             scores: {},
-            currentScreen: 'setup'
+            currentScreen: 'setup',
+            firstPlayerIndex: 0
         };
 
         // Initialize language manager
@@ -108,12 +109,21 @@ class ImposterWordGame {
         const container = document.getElementById('player-names-container');
         container.innerHTML = '';
 
+        // Load previous player names from localStorage
+        const savedNames = this.loadPlayerNames();
+
         for (let i = 0; i < this.gameState.playerCount; i++) {
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'player-input';
             input.placeholder = `${this.lang.t('playerPlaceholder')} ${i + 1}`;
             input.maxLength = 20;
+
+            // Pre-fill with saved name if available
+            if (savedNames && savedNames[i]) {
+                input.value = savedNames[i];
+            }
+
             container.appendChild(input);
         }
 
@@ -146,12 +156,16 @@ class ImposterWordGame {
         const inputs = document.querySelectorAll('.player-input');
         this.gameState.players = Array.from(inputs).map(input => input.value.trim());
 
+        // Save player names to localStorage for next game
+        this.savePlayerNames(this.gameState.players);
+
         this.gameState.scores = {};
         this.gameState.players.forEach(player => {
             this.gameState.scores[player] = 0;
         });
 
         this.assignImposter();
+        this.selectFirstPlayer();
         this.showScreen('category-screen');
     }
 
@@ -217,7 +231,7 @@ class ImposterWordGame {
     }
 
     showInstructions() {
-        const firstPlayer = this.gameState.players[0];
+        const firstPlayer = this.gameState.players[this.gameState.firstPlayerIndex];
         document.getElementById('first-player-name').textContent = firstPlayer;
         this.showScreen('instructions-screen');
     }
@@ -335,6 +349,7 @@ class ImposterWordGame {
 
     nextRound() {
         this.assignImposter();
+        this.selectFirstPlayer();
         this.gameState.votedPlayer = null;
         this.gameState.selectedCategory = null;
         this.gameState.secretWord = null;
@@ -343,19 +358,23 @@ class ImposterWordGame {
     }
 
     endGame() {
+        // Save current player count for next game
+        const currentPlayerCount = this.gameState.playerCount;
+
         this.gameState = {
             players: [],
-            playerCount: 4,
+            playerCount: currentPlayerCount,
             currentPlayerIndex: 0,
             imposterIndex: -1,
             selectedCategory: null,
             secretWord: null,
             votedPlayer: null,
             scores: {},
-            currentScreen: 'setup'
+            currentScreen: 'setup',
+            firstPlayerIndex: 0
         };
 
-        document.getElementById('player-count-display').textContent = '4';
+        document.getElementById('player-count-display').textContent = currentPlayerCount.toString();
         this.generatePlayerInputs();
         this.showScreen('setup-screen');
     }
@@ -366,6 +385,14 @@ class ImposterWordGame {
         });
         document.getElementById(screenId).classList.add('active');
         this.gameState.currentScreen = screenId.replace('-screen', '');
+
+        // Ensure page is scrolled to top on mobile devices
+        setTimeout(() => {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            // Also ensure body scroll is at top
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }, 100);
     }
 
     capitalizeFirst(str) {
@@ -380,6 +407,48 @@ class ImposterWordGame {
 
     hideRules() {
         document.getElementById('rules-modal').classList.add('hidden');
+    }
+
+    savePlayerNames(playerNames) {
+        try {
+            localStorage.setItem('imposterGamePlayerNames', JSON.stringify(playerNames));
+        } catch (e) {
+            console.warn('Could not save player names to localStorage:', e);
+        }
+    }
+
+    loadPlayerNames() {
+        try {
+            const saved = localStorage.getItem('imposterGamePlayerNames');
+            return saved ? JSON.parse(saved) : null;
+        } catch (e) {
+            console.warn('Could not load player names from localStorage:', e);
+            return null;
+        }
+    }
+
+    selectFirstPlayer() {
+        // Weighted random selection: imposter has 20% chance, others have 80% chance total
+        const imposterChance = 0.2;
+        const nonImposterPlayers = this.gameState.players.length - 1;
+        const nonImposterChanceEach = (1 - imposterChance) / nonImposterPlayers;
+
+        const random = Math.random();
+
+        if (random < imposterChance) {
+            // Imposter starts (20% chance)
+            this.gameState.firstPlayerIndex = this.gameState.imposterIndex;
+        } else {
+            // One of the non-imposters starts (80% chance total)
+            const availableIndices = [];
+            for (let i = 0; i < this.gameState.players.length; i++) {
+                if (i !== this.gameState.imposterIndex) {
+                    availableIndices.push(i);
+                }
+            }
+            const randomIndex = Math.floor(Math.random() * availableIndices.length);
+            this.gameState.firstPlayerIndex = availableIndices[randomIndex];
+        }
     }
 }
 
