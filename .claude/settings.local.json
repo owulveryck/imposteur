@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add .)",
+      "Bash(open index.html)",
+      "Bash(node -c game.js)",
+      "Bash(npm init -y)",
+      "Bash(npm install @playwright/test)",
+      "Bash(npx playwright install)",
+      "Bash(npm run test)",
+      "Bash(curl -I http://localhost:3000)",
+      "Bash(npx playwright test tests/setup-screen.spec.js --headed)",
+      "Bash(npx playwright test tests/setup-screen.spec.js:8 --project=chromium)",
+      "Bash(npx playwright test tests/mobile-responsive.spec.js:50 --project='Mobile Chrome')",
+      "Bash(npx playwright test tests/mobile-responsive.spec.js --project='Mobile Chrome' --grep \"should display properly on mobile portrait\")",
+      "Bash(npx playwright test tests/mobile-responsive.spec.js --project='Mobile Chrome' --grep \"should display properly on mobile portrait\" --timeout=10000)",
+      "Bash(npx playwright test tests/game-flow.spec.js --project=chromium --timeout=30000)",
+      "Bash(node test-demo.js)",
+      "Bash(npx playwright test tests/role-distribution.spec.js:33 --project=chromium)",
+      "Bash(node test-french-categories.js)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
