@@ -37,6 +37,9 @@ class ImposterWordGame {
 
             if (element.tagName === 'INPUT' && element.type === 'text') {
                 // Don't change the value of input fields, just placeholder if needed
+            } else if (key.includes('Text') && translation.includes('<br>')) {
+                // Handle HTML content for text that contains line breaks
+                element.innerHTML = translation;
             } else {
                 element.textContent = translation;
             }
@@ -78,6 +81,15 @@ class ImposterWordGame {
         document.getElementById('continue-results-btn').addEventListener('click', () => this.showScoreboard());
         document.getElementById('next-round-btn').addEventListener('click', () => this.nextRound());
         document.getElementById('end-game-btn').addEventListener('click', () => this.endGame());
+        document.getElementById('rules-btn').addEventListener('click', () => this.showRules());
+        document.getElementById('rules-close-btn').addEventListener('click', () => this.hideRules());
+
+        // Close modal when clicking outside
+        document.getElementById('rules-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'rules-modal') {
+                this.hideRules();
+            }
+        });
 
         document.addEventListener('input', (e) => {
             if (e.target.classList.contains('player-input')) {
@@ -358,6 +370,16 @@ class ImposterWordGame {
 
     capitalizeFirst(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    showRules() {
+        // Re-translate the modal content in case language has changed
+        this.translateUI();
+        document.getElementById('rules-modal').classList.remove('hidden');
+    }
+
+    hideRules() {
+        document.getElementById('rules-modal').classList.add('hidden');
     }
 }
 

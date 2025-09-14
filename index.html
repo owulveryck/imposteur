@@ -34,6 +34,7 @@
                     </div>
 
                     <button id="start-game-btn" class="btn btn-primary" disabled data-i18n="startGameBtn">Start Game</button>
+                    <button id="rules-btn" class="btn btn-secondary" data-i18n="rulesBtn">Rules</button>
                 </div>
             </div>
 
@@ -117,6 +118,34 @@
                 </div>
             </div>
         </main>
+
+        <!-- Rules Modal -->
+        <div id="rules-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 data-i18n="rulesTitle">How to Play</h2>
+                    <button id="rules-close-btn" class="close-btn" data-i18n="rulesClose">Close</button>
+                </div>
+                <div class="modal-body">
+                    <div class="rules-section">
+                        <h3 data-i18n="rulesObjective">Objective</h3>
+                        <p data-i18n="rulesObjectiveText">A social deduction game where all players but one (the "Imposter") know a secret word. The Imposter must blend in while others try to identify them.</p>
+                    </div>
+                    <div class="rules-section">
+                        <h3 data-i18n="rulesSetup">Game Setup</h3>
+                        <p data-i18n="rulesSetupText">• 4-12 players take turns using one phone<br>• Enter player names and select a category<br>• One player is randomly chosen as the Imposter</p>
+                    </div>
+                    <div class="rules-section">
+                        <h3 data-i18n="rulesGameplay">How to Play</h3>
+                        <p data-i18n="rulesGameplayText">• Each player secretly views their role<br>• Non-imposters see the secret word<br>• The Imposter only sees the category<br>• Go around giving one-word clues (2 full rounds)<br>• Vote to identify the Imposter</p>
+                    </div>
+                    <div class="rules-section">
+                        <h3 data-i18n="rulesScoring">Scoring</h3>
+                        <p data-i18n="rulesScoringText">• <strong>Crew wins:</strong> Everyone gets 1 point if Imposter is caught<br>• <strong>Imposter wins:</strong> Gets 1 point for survival<br>• <strong>Bonus:</strong> Imposter gets +1 point for guessing the word correctly</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="words-config.js"></script>

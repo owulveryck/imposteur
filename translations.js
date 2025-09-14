@@ -58,7 +58,20 @@ const TRANSLATIONS = {
         // Scoreboard Screen
         scoreboardTitle: "Current Scores",
         nextRoundBtn: "Play Next Round",
-        endGameBtn: "End Game"
+        endGameBtn: "End Game",
+
+        // Rules
+        rulesBtn: "Rules",
+        rulesTitle: "How to Play",
+        rulesClose: "Close",
+        rulesObjective: "Objective",
+        rulesObjectiveText: "A social deduction game where all players but one (the \"Imposter\") know a secret word. The Imposter must blend in while others try to identify them.",
+        rulesSetup: "Game Setup",
+        rulesSetupText: "• 4-12 players take turns using one phone<br>• Enter player names and select a category<br>• One player is randomly chosen as the Imposter",
+        rulesGameplay: "How to Play",
+        rulesGameplayText: "• Each player secretly views their role<br>• Non-imposters see the secret word<br>• The Imposter only sees the category<br>• Go around giving one-word clues (2 full rounds)<br>• Vote to identify the Imposter",
+        rulesScoring: "Scoring",
+        rulesScoringText: "• <strong>Crew wins:</strong> Everyone gets 1 point if Imposter is caught<br>• <strong>Imposter wins:</strong> Gets 1 point for survival<br>• <strong>Bonus:</strong> Imposter gets +1 point for guessing the word correctly"
     },
     fr: {
         // Header
@@ -117,7 +130,20 @@ const TRANSLATIONS = {
         // Scoreboard Screen
         scoreboardTitle: "Scores Actuels",
         nextRoundBtn: "Jouer le Tour Suivant",
-        endGameBtn: "Terminer la Partie"
+        endGameBtn: "Terminer la Partie",
+
+        // Rules
+        rulesBtn: "Règles",
+        rulesTitle: "Comment Jouer",
+        rulesClose: "Fermer",
+        rulesObjective: "Objectif",
+        rulesObjectiveText: "Un jeu de déduction sociale où tous les joueurs sauf un (\"l'Imposteur\") connaissent un mot secret. L'Imposteur doit se fondre dans la masse pendant que les autres tentent de l'identifier.",
+        rulesSetup: "Configuration",
+        rulesSetupText: "• 4-12 joueurs se passent un téléphone à tour de rôle<br>• Entrez les noms des joueurs et sélectionnez une catégorie<br>• Un joueur est choisi au hasard comme Imposteur",
+        rulesGameplay: "Déroulement",
+        rulesGameplayText: "• Chaque joueur consulte secrètement son rôle<br>• Les non-imposteurs voient le mot secret<br>• L'Imposteur ne voit que la catégorie<br>• Faites le tour en donnant des indices d'un mot (2 tours complets)<br>• Votez pour identifier l'Imposteur",
+        rulesScoring: "Points",
+        rulesScoringText: "• <strong>L'Équipe gagne :</strong> Tout le monde obtient 1 point si l'Imposteur est attrapé<br>• <strong>L'Imposteur gagne :</strong> Obtient 1 point pour avoir survécu<br>• <strong>Bonus :</strong> L'Imposteur obtient +1 point s'il devine le mot correctement"
     }
 };
 
