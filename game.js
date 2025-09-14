@@ -12,17 +12,55 @@ class ImposterWordGame {
             currentScreen: 'setup'
         };
 
-        // Load categories from external configuration
-        this.categories = window.WORD_CATEGORIES || {};
+        // Initialize language manager
+        this.lang = new LanguageManager();
+
+        // Load categories based on current language
+        this.categories = this.lang.getWordCategories();
 
         this.init();
     }
 
     init() {
         this.setupEventListeners();
+        this.translateUI();
         this.generatePlayerInputs();
         this.generateCategoryButtons();
         this.showScreen('setup-screen');
+    }
+
+    translateUI() {
+        // Translate all elements with data-i18n attribute
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            const translation = this.lang.t(key);
+
+            if (element.tagName === 'INPUT' && element.type === 'text') {
+                // Don't change the value of input fields, just placeholder if needed
+            } else {
+                element.textContent = translation;
+            }
+        });
+
+        // Translate placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-i18n-placeholder');
+            const translation = this.lang.t(key);
+            element.placeholder = translation;
+        });
+
+        // Special handling for HTML content with embedded elements
+        const instructionsText2 = document.querySelector('[data-i18n="instructionsText2"]');
+        if (instructionsText2) {
+            const firstPlayerName = document.getElementById('first-player-name');
+            const playerName = firstPlayerName ? firstPlayerName.textContent : 'Player 1';
+
+            if (this.lang.getCurrentLanguage() === 'fr') {
+                instructionsText2.innerHTML = `En commençant par <strong id="first-player-name">${playerName}</strong>, faites le tour et donnez un <strong>indice d'un mot</strong> lié au mot secret.`;
+            } else {
+                instructionsText2.innerHTML = `Starting with <strong id="first-player-name">${playerName}</strong>, go around the circle and give a <strong>one-word clue</strong> related to the secret word.`;
+            }
+        }
     }
 
     setupEventListeners() {
@@ -62,7 +100,7 @@ class ImposterWordGame {
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'player-input';
-            input.placeholder = `Player ${i + 1}`;
+            input.placeholder = `${this.lang.t('playerPlaceholder')} ${i + 1}`;
             input.maxLength = 20;
             container.appendChild(input);
         }
@@ -121,7 +159,7 @@ class ImposterWordGame {
 
     showRoleDistribution() {
         const playerName = this.gameState.players[this.gameState.currentPlayerIndex];
-        document.getElementById('current-player-name').textContent = `${playerName}, it's your turn.`;
+        document.getElementById('current-player-name').textContent = `${playerName}${this.lang.t('yourTurn')}`;
 
         document.getElementById('reveal-role-btn').classList.remove('hidden');
         document.getElementById('role-display').classList.add('hidden');
@@ -137,14 +175,14 @@ class ImposterWordGame {
 
         if (isImposter) {
             roleContent.innerHTML = `
-                <h3>You are the</h3>
-                <p class="imposter-role">IMPOSTER!</p>
-                <p>Category: <span class="highlight">${categoryName}</span></p>
+                <h3>${this.lang.t('youAreThe')}</h3>
+                <p class="imposter-role">${this.lang.t('imposterRole')}</p>
+                <p>${this.lang.t('category')} <span class="highlight">${categoryName}</span></p>
             `;
         } else {
             roleContent.innerHTML = `
-                <p>Category: <span class="highlight">${categoryName}</span></p>
-                <p>Secret Word: <span class="secret-word">${this.gameState.secretWord.toUpperCase()}</span></p>
+                <p>${this.lang.t('category')} <span class="highlight">${categoryName}</span></p>
+                <p>${this.lang.t('secretWord')} <span class="secret-word">${this.gameState.secretWord.toUpperCase()}</span></p>
             `;
         }
 
@@ -152,7 +190,7 @@ class ImposterWordGame {
         document.getElementById('role-display').classList.remove('hidden');
 
         if (this.gameState.currentPlayerIndex === this.gameState.players.length - 1) {
-            document.getElementById('pass-phone-btn').textContent = 'Start the Game!';
+            document.getElementById('pass-phone-btn').textContent = this.lang.t('startGameBtn2');
         }
     }
 
@@ -202,10 +240,10 @@ class ImposterWordGame {
 
         if (this.gameState.votedPlayer === this.gameState.imposterIndex) {
             resultsContent.innerHTML = `
-                <h3 class="success-text">You caught the Imposter!</h3>
-                <p><span class="highlight">${imposterName}</span> was the Imposter.</p>
-                <p>The secret word was: <span class="secret-word">${this.gameState.secretWord}</span></p>
-                <p class="success-text">The Crew gets 1 point!</p>
+                <h3 class="success-text">${this.lang.t('caughtImposter')}</h3>
+                <p><span class="highlight">${imposterName}</span>${this.lang.t('wasImposter')}</p>
+                <p>${this.lang.t('secretWordWas')}<span class="secret-word">${this.gameState.secretWord}</span></p>
+                <p class="success-text">${this.lang.t('crewGetsPoint')}</p>
             `;
 
             this.gameState.players.forEach((player, index) => {
@@ -218,13 +256,13 @@ class ImposterWordGame {
             document.getElementById('imposter-guess-section').classList.add('hidden');
         } else {
             resultsContent.innerHTML = `
-                <h3 class="error-text">Wrong guess!</h3>
-                <p><span class="highlight">${votedPlayerName}</span> was not the Imposter.</p>
-                <p>The real Imposter was <span class="highlight">${imposterName}</span>!</p>
+                <h3 class="error-text">${this.lang.t('wrongGuess')}</h3>
+                <p><span class="highlight">${votedPlayerName}</span>${this.lang.t('wasNotImposter')}</p>
+                <p>${this.lang.t('realImposterWas')}<span class="highlight">${imposterName}</span>!</p>
             `;
 
             document.getElementById('imposter-guess-prompt').textContent =
-                `${imposterName}, you have one chance to guess the secret word for a bonus point!`;
+                `${imposterName}${this.lang.t('imposterGuessPrompt')}`;
             document.getElementById('imposter-guess-section').classList.remove('hidden');
             document.getElementById('continue-results-btn').classList.add('hidden');
         }
@@ -241,18 +279,18 @@ class ImposterWordGame {
         if (guess === secretWord) {
             resultsContent.innerHTML += `
                 <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
-                    <h3 class="success-text">Correct!</h3>
-                    <p>The word was <span class="secret-word">${this.gameState.secretWord}</span>.</p>
-                    <p class="success-text">The Imposter earns 2 points!</p>
+                    <h3 class="success-text">${this.lang.t('correctGuess')}</h3>
+                    <p>${this.lang.t('wordWas')}<span class="secret-word">${this.gameState.secretWord}</span>.</p>
+                    <p class="success-text">${this.lang.t('imposterEarns2')}</p>
                 </div>
             `;
             this.gameState.scores[imposterName] += 2;
         } else {
             resultsContent.innerHTML += `
                 <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
-                    <h3 class="error-text">Incorrect!</h3>
-                    <p>The secret word was <span class="secret-word">${this.gameState.secretWord}</span>.</p>
-                    <p>The Imposter earns 1 point.</p>
+                    <h3 class="error-text">${this.lang.t('incorrectGuess')}</h3>
+                    <p>${this.lang.t('secretWordWas')}<span class="secret-word">${this.gameState.secretWord}</span>.</p>
+                    <p>${this.lang.t('imposterEarns1')}</p>
                 </div>
             `;
             this.gameState.scores[imposterName] += 1;

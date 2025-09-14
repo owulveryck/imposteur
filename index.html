@@ -12,16 +12,16 @@
 <body>
     <div id="app">
         <header>
-            <h1>Imposter Word Game</h1>
+            <h1 data-i18n="gameTitle">Imposter Word Game</h1>
         </header>
 
         <main id="game-container">
             <!-- Screen 1: Game Setup -->
             <div id="setup-screen" class="screen active">
                 <div class="content">
-                    <h2>Game Setup</h2>
+                    <h2 data-i18n="setupTitle">Game Setup</h2>
                     <div class="player-count-section">
-                        <label for="player-count">Number of Players:</label>
+                        <label for="player-count" data-i18n="playerCountLabel">Number of Players:</label>
                         <div class="player-counter">
                             <button id="decrease-players" class="btn btn-small">-</button>
                             <span id="player-count-display">4</span>
@@ -33,14 +33,14 @@
                         <!-- Player name inputs will be generated here -->
                     </div>
 
-                    <button id="start-game-btn" class="btn btn-primary" disabled>Start Game</button>
+                    <button id="start-game-btn" class="btn btn-primary" disabled data-i18n="startGameBtn">Start Game</button>
                 </div>
             </div>
 
             <!-- Screen 2: Category Selection -->
             <div id="category-screen" class="screen">
                 <div class="content">
-                    <h2>Choose a Category</h2>
+                    <h2 data-i18n="categoryTitle">Choose a Category</h2>
                     <div id="categories-grid">
                         <!-- Category buttons will be generated dynamically -->
                     </div>
@@ -51,13 +51,13 @@
             <div id="role-screen" class="screen">
                 <div class="content">
                     <h2 id="current-player-name">Player 1, it's your turn.</h2>
-                    <button id="reveal-role-btn" class="btn btn-primary">Tap to Reveal Your Role</button>
+                    <button id="reveal-role-btn" class="btn btn-primary" data-i18n="revealRoleBtn">Tap to Reveal Your Role</button>
 
                     <div id="role-display" class="hidden">
                         <div id="role-content">
                             <!-- Role content will be shown here -->
                         </div>
-                        <button id="pass-phone-btn" class="btn btn-primary">Got It! Pass to the Next Player</button>
+                        <button id="pass-phone-btn" class="btn btn-primary" data-i18n="gotItBtn">Got It! Pass to the Next Player</button>
                     </div>
                 </div>
             </div>
@@ -65,54 +65,54 @@
             <!-- Screen 4: Gameplay Instructions -->
             <div id="instructions-screen" class="screen">
                 <div class="content">
-                    <h2>The Game Begins!</h2>
+                    <h2 data-i18n="instructionsTitle">The Game Begins!</h2>
                     <div class="instructions">
-                        <p>Everyone has their role. Put the phone down now.</p>
-                        <p>Starting with <strong id="first-player-name">Player 1</strong>, go around the circle and give a <strong>one-word clue</strong> related to the secret word.</p>
-                        <p>After <strong>two full rounds</strong> of clues, pick up the phone to vote.</p>
+                        <p data-i18n="instructionsText1">Everyone has their role. Put the phone down now.</p>
+                        <p data-i18n="instructionsText2">Starting with <strong id="first-player-name">Player 1</strong>, go around the circle and give a <strong>one-word clue</strong> related to the secret word.</p>
+                        <p data-i18n="instructionsText3">After <strong>two full rounds</strong> of clues, pick up the phone to vote.</p>
                     </div>
-                    <button id="proceed-voting-btn" class="btn btn-primary">Proceed to Voting</button>
+                    <button id="proceed-voting-btn" class="btn btn-primary" data-i18n="proceedVotingBtn">Proceed to Voting</button>
                 </div>
             </div>
 
             <!-- Screen 5: Voting -->
             <div id="voting-screen" class="screen">
                 <div class="content">
-                    <h2>Who is the Imposter?</h2>
-                    <p class="instructions">After discussion, select the player the group has voted for.</p>
+                    <h2 data-i18n="votingTitle">Who is the Imposter?</h2>
+                    <p class="instructions" data-i18n="votingInstructions">After discussion, select the player the group has voted for.</p>
                     <div id="voting-buttons">
                         <!-- Voting buttons will be generated here -->
                     </div>
-                    <button id="reveal-vote-btn" class="btn btn-primary" disabled>Reveal the Vote</button>
+                    <button id="reveal-vote-btn" class="btn btn-primary" disabled data-i18n="revealVoteBtn">Reveal the Vote</button>
                 </div>
             </div>
 
             <!-- Screen 6: Results -->
             <div id="results-screen" class="screen">
                 <div class="content">
-                    <h2>Results</h2>
+                    <h2 data-i18n="resultsTitle">Results</h2>
                     <div id="results-content">
                         <!-- Results will be shown here -->
                     </div>
                     <div id="imposter-guess-section" class="hidden">
                         <p id="imposter-guess-prompt"></p>
-                        <input type="text" id="imposter-guess-input" placeholder="Enter your guess">
-                        <button id="submit-guess-btn" class="btn btn-primary">Submit Guess</button>
+                        <input type="text" id="imposter-guess-input" data-i18n-placeholder="enterGuess" placeholder="Enter your guess">
+                        <button id="submit-guess-btn" class="btn btn-primary" data-i18n="submitGuessBtn">Submit Guess</button>
                     </div>
-                    <button id="continue-results-btn" class="btn btn-primary hidden">Continue</button>
+                    <button id="continue-results-btn" class="btn btn-primary hidden" data-i18n="continueBtn">Continue</button>
                 </div>
             </div>
 
             <!-- Screen 7: Scoreboard -->
             <div id="scoreboard-screen" class="screen">
                 <div class="content">
-                    <h2>Current Scores</h2>
+                    <h2 data-i18n="scoreboardTitle">Current Scores</h2>
                     <div id="scores-list">
                         <!-- Scores will be displayed here -->
                     </div>
                     <div class="game-controls">
-                        <button id="next-round-btn" class="btn btn-primary">Play Next Round</button>
-                        <button id="end-game-btn" class="btn btn-secondary">End Game</button>
+                        <button id="next-round-btn" class="btn btn-primary" data-i18n="nextRoundBtn">Play Next Round</button>
+                        <button id="end-game-btn" class="btn btn-secondary" data-i18n="endGameBtn">End Game</button>
                     </div>
                 </div>
             </div>
@@ -120,6 +120,8 @@
     </div>
 
     <script src="words-config.js"></script>
+    <script src="words-config-en.js"></script>
+    <script src="translations.js"></script>
     <script src="game.js"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@
     "test:mobile": "playwright test --project='Mobile Chrome' --project='Mobile Safari'",
     "test:demo": "node test-demo.js",
     "test:french": "node test-french-categories.js",
+    "test:translations": "node test-translations.js",
     "serve": "python3 -m http.server 3000"
   },
   "keywords": [],

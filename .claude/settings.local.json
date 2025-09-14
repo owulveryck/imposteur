@@ -17,7 +17,13 @@
       "Bash(npx playwright test tests/game-flow.spec.js --project=chromium --timeout=30000)",
       "Bash(node test-demo.js)",
       "Bash(npx playwright test tests/role-distribution.spec.js:33 --project=chromium)",
-      "Bash(node test-french-categories.js)"
+      "Bash(node test-french-categories.js)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial implementation of Imposter Word Game\n\n- Complete social deduction game with 7 screens (setup → category → roles → instructions → voting → results → scoreboard)\n- French word categories: 10 categories with 300+ words (Vêtements, Émotions, Cuisine, etc.)\n- External word configuration system in words-config.js for easy localization\n- Mobile-first responsive design with touch-friendly controls\n- Role distribution system that maintains game secrecy (imposter vs non-imposter)\n- Comprehensive Playwright test suite covering all game flows and mobile responsiveness\n- Game implements all rules from specification: 4-12 players, role assignment, voting, scoring\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(gh repo create owulveryck/imposteur --public --description \"Mobile-first Imposter Word Game - A social deduction game in French with comprehensive Playwright testing\" --homepage \"https://owulveryck.github.io/imposteur\")",
+      "Bash(git remote add origin https://github.com/owulveryck/imposteur.git)",
+      "Bash(git push -u origin main)",
+      "Bash(gh repo view owulveryck/imposteur --web)",
+      "Bash(node test-translations.js)"
     ],
     "deny": [],
     "ask": []
