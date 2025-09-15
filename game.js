@@ -2,7 +2,7 @@ class ImposterWordGame {
     constructor() {
         this.gameState = {
             players: [],
-            playerCount: 4,
+            playerCount: 3,
             currentPlayerIndex: 0,
             imposterIndex: -1,
             selectedCategory: null,
@@ -100,7 +100,7 @@ class ImposterWordGame {
     }
 
     changePlayerCount(delta) {
-        this.gameState.playerCount = Math.max(4, Math.min(12, this.gameState.playerCount + delta));
+        this.gameState.playerCount = Math.max(3, Math.min(12, this.gameState.playerCount + delta));
         document.getElementById('player-count-display').textContent = this.gameState.playerCount;
         this.generatePlayerInputs();
     }
